@@ -1,4 +1,4 @@
-import { fileName } from "../../utils/RegExpList";
+import { fileName } from "@/utils/RegExpList";
 const files = require.context("./", true, /\.js$/);
 const allApi = {};
 files.keys().forEach(key => {

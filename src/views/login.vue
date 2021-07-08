@@ -1,7 +1,17 @@
 <template>
   <div>
-    <el-card>
+    <div v-screenfull.icon>全屏</div>
+    <el-card class="loginClass">
       <h5>账号登陆</h5>
+      <el-select v-model="value" v-selectOptionLazy="loadmore" placeholder="请选择">
+        <el-option
+          v-for="(val, key, index) in options"
+          :key="index"
+          :label="val"
+          :value="key">
+        </el-option>
+      </el-select>
+      <div>当前时间：{{ time | dateFilter }}</div>
       <el-form ref="loginForm" :model="loginData" :rules="loginForm" label-width="80px">
         <el-form-item label="账号名" prop="name">
           <el-input v-model="loginData.name"></el-input>
@@ -17,6 +27,7 @@
   </div>
 </template>
 <script>
+import { setToken } from "@/utils/storage.js";
 export default {
   name: "Login",
   data() {
@@ -24,7 +35,10 @@ export default {
       loginData: {
         name: "",
         password: ""
-      }
+      },
+      options: this.$allData.common.loginOption,
+      value: "",
+      time: 120
     };
   },
   computed: {
@@ -44,13 +58,25 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.Http.post("login.login").then(data => {
-            console.log(data);
+            setToken(data.token);
+            this.$router.push("/home");
           });
         } else {
           return false;
         }
       });
+    },
+    loadmore() {
+      console.log("loadmore");
     }
   }
 };
 </script>
+<style lang="less" scoped>
+.loginClass{
+  width: 300px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+</style>

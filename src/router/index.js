@@ -1,25 +1,27 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Welcom from "../views/home/welcom.vue";
+const files = require.context("./", false, /\.js$/);
+const allRouter = {};
+files.keys().forEach(key => {
+  if (files(key).default) {
+    const name = key.match(Vue.prototype.$RegExp.fileName)[0];
+    allRouter[name] = files(key).default;
+  }
+});
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Welcom",
-    component: Welcom
-  },
   {
     path: "/login",
     name: "Login",
     component: () => import("../views/login.vue")
   },
   {
-    path: "/home",
-    name: "Home",
-    component: Home
+    path: "/",
+    name: "",
+    children: allRouter.home,
+    redirect: "/welcom"
   },
   {
     path: "/about",
@@ -30,7 +32,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ "../views/About.vue")
   }
 ];
-
+console.log(routes);
 const router = new VueRouter({
   routes
 });

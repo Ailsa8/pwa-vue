@@ -11,7 +11,7 @@ const envlist = {
   pre: {
     VUE_APP_BASE_API: "http://localhost:3001"
   },
-  prd: {
+  production: {
     VUE_APP_BASE_API: "http://localhost:3001"
   }
 };

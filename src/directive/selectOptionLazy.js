@@ -1,0 +1,15 @@
+/* 搜索下拉框懒加载
+下拉框滚动条触底加载
+触发加载方法 */
+export default {
+  bind(el, binding) {
+    // 获取element-ui定义好的scroll盒子
+    const SELECTWRAP_DOM = el.querySelector(".el-select-dropdown .el-select-dropdown__wrap");
+    SELECTWRAP_DOM.addEventListener("scroll", function() {
+      const CONDITION = this.scrollHeight - this.scrollTop <= this.clientHeight;
+      if (CONDITION) {
+        binding.value();
+      }
+    });
+  }
+};
