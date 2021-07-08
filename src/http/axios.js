@@ -7,15 +7,30 @@ import router from "@/router";
 axios.create({
   timeout: 5000
 });
+// 解决并发
+const pendingRequests = new Map();
 // 请求拦截
-axios.interceptors.request.use(req => {
-  req.headers = Object.assign({}, req.headers, getHeaders());
-  return req;
+axios.interceptors.request.use(config => {
+  const requestKey = `${config.url}/${JSON.stringify(config.params)}/${JSON.stringify(config.data)}&request_type=${config.method}`;
+  if (pendingRequests.has(requestKey)) {
+    config.cancelToken = new axios.CancelToken((cancel) => {
+      // cancel 函数的参数会作为 promise 的 error 被捕获
+      cancel(`重复的请求被主动拦截: ${requestKey}`);
+    });
+  } else {
+    pendingRequests.set(requestKey, config);
+    config.requestKey = requestKey;
+  }
+  config.headers = Object.assign({}, config.headers, getHeaders());
+  return config;
 }, (err) => {
+  pendingRequests.clear();
   return Promise.reject(err);
 });
 // 响应拦截
 axios.interceptors.response.use(res => {
+  const requestKey = res.config.requestKey;
+  pendingRequests.delete(requestKey);
   if (res.data.code === "000000") {
     return res.data.content;
   } else {
@@ -23,6 +38,11 @@ axios.interceptors.response.use(res => {
     return;
   }
 }, (err) => {
+  if (axios.isCancel(err)) {
+    console.warn(err);
+    return Promise.reject(err);
+  }
+  pendingRequests.clear();
   handleErr(err.response);
   return;
 });
@@ -55,7 +75,7 @@ const getUrl = function(data) {
     title = data.substring(0, data.indexOf("."));
     subtitle = data.substring(data.indexOf(".") + 1, data.length);
   }
-
+  console.log("allApi,", allApi);
   return allApi[title][subtitle];
 };
 
@@ -71,4 +91,5 @@ class Axios {
   }
 }
 const Http = new Axios();
+export { pendingRequests };
 export default Http;
