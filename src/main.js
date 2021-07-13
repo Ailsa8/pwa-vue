@@ -3,6 +3,7 @@ import App from "./App.vue";
 import "@/utils/RegExpList";
 import "@/utils/common";
 import router from "./router";
+import store from "@/store";
 import "./registerServiceWorker";
 import Http from "./http/axios";
 import ElementUI from "element-ui";
@@ -17,5 +18,6 @@ Vue.prototype.Http = Http;
 Vue.use(ElementUI);
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");

@@ -18,10 +18,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
 }
 
 #nav {
-  padding: 30px;
+  padding: 30px 30px 30px 0;
+  width: 200px;
 }
 
 #nav a {

@@ -1,17 +1,7 @@
 <template>
   <div>
-    <div v-screenfull.icon>全屏</div>
     <el-card class="loginClass">
       <h5>账号登陆</h5>
-      <el-select v-model="value" v-selectOptionLazy="loadmore" placeholder="请选择">
-        <el-option
-          v-for="(val, key, index) in options"
-          :key="index"
-          :label="val"
-          :value="key">
-        </el-option>
-      </el-select>
-      <div>当前时间：{{ time | dateFilter }}</div>
       <el-form ref="loginForm" :model="loginData" :rules="loginForm" label-width="80px">
         <el-form-item label="账号名" prop="name">
           <el-input v-model="loginData.name"></el-input>
@@ -35,10 +25,7 @@ export default {
       loginData: {
         name: "",
         password: ""
-      },
-      options: this.$allData.common.loginOption,
-      value: "",
-      time: 120
+      }
     };
   },
   computed: {
@@ -53,6 +40,9 @@ export default {
       };
     }
   },
+  created() {
+    console.log(this.$store);
+  },
   methods: {
     async login() {
       this.$refs.loginForm.validate((valid) => {
@@ -65,9 +55,6 @@ export default {
           return false;
         }
       });
-    },
-    loadmore() {
-      console.log("loadmore");
     }
   }
 };

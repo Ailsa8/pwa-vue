@@ -1,5 +1,8 @@
 
 const envList = require("./src/envConfig/envlist.js");
+// const SourceMapUploader = require("./src/utils/source-map-upload.js"); // map文件上传
+const path = require("path"); // 可用来设置别名时
+const resolve = dir => path.resolve(__dirname, dir); // 获取路径
 console.log("process.env.NODE_ENV==", process.env.NODE_ENV);
 const configData = {
   publicPath: "/",
@@ -49,6 +52,7 @@ const configData = {
         "maxAssetSize": 30000000
       };
     }
+    // config.plugins.push(new SourceMapUploader({ url: "http://localhost:3001/upload" }));  // map文件上传
   },
   chainWebpack: config => {
     // 设置全局常量
@@ -58,6 +62,8 @@ const configData = {
         args[0]["process.env"]["APP_VUE_HIST"] = JSON.stringify({ name: "weeeeeee" });
         return args;
       });
+    // 添加别名
+    config.resolve.alias.set("@c", resolve("src/components"));
   }
 };
 
