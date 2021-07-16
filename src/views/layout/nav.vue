@@ -9,41 +9,27 @@
       active-text-color="#ffd04b"
       @open="handleOpen"
       @close="handleClose">
-      <el-submenu index="1">
+      <el-submenu v-for="(item, index) in OneNav" :key="index" :index="'oneLevel' + index">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>home</span>
+          <i :class="item.meta.icon"></i>
+          <span>{{ item.meta.title }}</span>
         </template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="1-1"><router-link to="/welcom">welcom</router-link></el-menu-item>
-          <el-menu-item index="1-2"><router-link to="/home">home</router-link></el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3"><router-link to="/directive">directive</router-link></el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="1-4-1"><router-link to="/storetest">storetest</router-link></el-menu-item>
-        </el-submenu>
+        <el-menu-item v-for="(subItem, subIndex) in allRouter[item.name]" :key="subIndex" :index="'twoLevel' + subIndex">
+          <router-link :to="subItem.path">{{ subItem.meta.title }}</router-link>
+        </el-menu-item>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title"><router-link to="/about">about</router-link></span>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>
 <script>
+import { OneNav, allRouter } from "@/router/index";
 export default {
+  data() {
+    return {
+      OneNav,
+      allRouter
+    };
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -54,11 +40,15 @@ export default {
   }
 };
 </script>
-<style>
-.tac{
-  position: absolute;
-  left: 0;
-  top: 0;
+<style lang="less" scoped>
+#nav{
   width: 200px;
+  a {
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 }
 </style>

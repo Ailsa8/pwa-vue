@@ -1,13 +1,13 @@
 import Vue from "vue";
 import router from "../router";
-import { getToken } from "../utils/storage";
+import { getlocation } from "../utils/storage";
 import { pendingRequests } from "@/http/axios";
 
 const whitePage = ["/login"];
 // 路由守卫 token过期 返回登陆
 router.beforeEach(async(to, from, next) => {
   pendingRequests.clear();
-  if (getToken() || whitePage.includes(to.path)) {
+  if (getlocation() || whitePage.includes(to.path)) {
     next();
   } else {
     next("/login");

@@ -11,6 +11,7 @@ const RegExpList = {
   Phone_Rep: /^1[2-9]\d{9}$/, // 手机号
   Letters_Rep: /^[a-z\u4e00-\u9fa5]+$/i, // 中英文
   NamefromUrl_Rep: /(?<=\/)(?!.*\/).*?(?=\?)/, // 从url中获取文件名http://XXX/111_2674_6258624285_958123274.docx?Expires=2571815942
-  SubFilterName_Rep: /_\d{4}(_\d+)+/ // _及其后所有（111_2674_6258624285_958123274.docx =》111.docx  _2674_6258624285_958123274）
+  SubFilterName_Rep: /_\d{4}(_\d+)+/, // _及其后所有（111_2674_6258624285_958123274.docx =》111.docx  _2674_6258624285_958123274）
+  email_Rep: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/ // 邮箱验证
 };
 Vue.prototype.$RegExp = RegExpList;

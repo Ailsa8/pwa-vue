@@ -17,7 +17,8 @@
   </div>
 </template>
 <script>
-import { setToken } from "@/utils/storage.js";
+import { setlocation } from "@/utils/storage.js";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "Login",
   data() {
@@ -38,17 +39,25 @@ export default {
           { required: true, message: "请输入密码" }
         ]
       };
-    }
+    },
+    ...mapActions({
+      addcount: "addCount"
+    })
   },
   created() {
     console.log(this.$store);
   },
   methods: {
+    ...mapMutations({
+      setUserName: "USERNAME"
+    }),
     async login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.Http.post("login.login").then(data => {
-            setToken(data.token);
+          this.Http.post("login.login", this.loginData).then(data => {
+            setlocation(data.token);
+            setlocation(this.loginData.name, "userName");
+            this.setUserName(this.loginData.name);
             this.$router.push("/home");
           });
         } else {

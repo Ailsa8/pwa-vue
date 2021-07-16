@@ -1,12 +1,16 @@
 export default {
   state: {
     // 全局状态
-    count: 1
+    count: 1,
+    userName: ""
   },
   getters: {
     // 过滤
     getcount: (state) => {
       return ++state.count;
+    },
+    getUserName: (state) => {
+      return state.userName;
     }
   },
   mutations: {
@@ -16,6 +20,10 @@ export default {
     },
     MINUS_COUNT(state) {
       --state.count;
+    },
+    USERNAME(state, val) {
+      console.log("mutations====", val);
+      state.userName = val;
     }
   },
   actions: {

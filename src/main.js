@@ -12,6 +12,7 @@ import "./utils/auth";
 import "@/directive";
 import "@/data";
 import "@/utils/filters";
+import "@/components/index";
 
 Vue.config.productionTip = false;
 Vue.prototype.Http = Http;

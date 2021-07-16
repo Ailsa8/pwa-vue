@@ -8,7 +8,8 @@ files.keys().forEach(key => {
     allRouter[name] = files(key).default;
   }
 });
-
+const childrenRoute = Object.values(allRouter).flat();
+console.log(childrenRoute);
 Vue.use(VueRouter);
 
 const routes = [
@@ -20,27 +21,34 @@ const routes = [
   {
     path: "/",
     name: "",
-    component: () => import("@/views/home/index.vue"),
-    children: allRouter.home,
-    redirect: "/welcom"
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ "../views/About.vue")
-  },
-  {
-    path: "/homeOld",
-    name: "HomeOld",
-    component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue")
+    component: () => import("@/views/layout/index.vue"),
+    children: childrenRoute
   }
 ];
 console.log(routes);
 const router = new VueRouter({
   routes
 });
-
+const OneNav = [
+  {
+    path: "",
+    name: "home",
+    component: null,
+    meta: {
+      title: "home",
+      activeMenu: "/home",
+      icon: "el-icon-location"
+    }
+  },
+  {
+    path: "",
+    name: "user",
+    component: null,
+    meta: {
+      title: "用户管理",
+      icon: "el-icon-menu"
+    }
+  }
+];
+export { allRouter, OneNav };
 export default router;

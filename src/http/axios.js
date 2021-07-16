@@ -1,7 +1,7 @@
 console.log(process.env);
 import axios from "axios";
 import allApi from "./api/index";
-import { getToken, clearInfro } from "@/utils/storage.js";
+import { getlocation, clearInfro } from "@/utils/storage.js";
 import { Message } from "element-ui";
 import router from "@/router";
 axios.create({
@@ -50,7 +50,7 @@ axios.interceptors.response.use(res => {
 // 获取header头
 function getHeaders() {
   return {
-    "Authorization": "Bearer " + getToken(),
+    "Authorization": "Bearer " + getlocation(),
     sign: "3233333"
   };
 }
@@ -59,14 +59,18 @@ const handleErr = function(err) {
   const { status } = err;
   switch (status) {
     case 401:
-      Message("验证失败，请重新登陆");
-      clearInfro();
-      router.push("/login");
+      logOut("验证失败，请重新登陆");
       break;
     default:
       Message("服务器错误");
   }
 };
+// 登出
+function logOut(des) {
+  des ? Message(des) : null;
+  clearInfro();
+  router.push("/login");
+}
 
 // 获取url
 const getUrl = function(data) {
@@ -91,5 +95,5 @@ class Axios {
   }
 }
 const Http = new Axios();
-export { pendingRequests };
+export { pendingRequests, logOut };
 export default Http;
