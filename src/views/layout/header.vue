@@ -1,6 +1,6 @@
 <template>
   <div class="page-header">
-    <span>当前账号：{{ userName }}</span>
+    <span class="user">当前账号：{{ userName }}</span>
     <el-button type="text" @click="logOut">登出</el-button>
   </div>
 </template>
@@ -32,9 +32,13 @@ export default {
 <style lang="less" scoped>
 .page-header{
   width: 100%;
-  height: 34px;
-  line-height: 34px;
-  background-color: aqua;
+  height: 40px;
+  line-height: 40px;
+  background-color: #8896B3;
   text-align: right;
+  color: white;
+  .user{
+    margin-right: 20px;
+  }
 }
 </style>

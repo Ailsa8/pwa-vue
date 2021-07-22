@@ -7,7 +7,7 @@ export function getlocation(type) {
 }
 export function setlocation(token, type) {
   if (type) {
-    sessionStorage.setItem(type, token);
+    sessionStorage.setItem(type, typeof token === "string" ? token : JSON.stringify(token));
   } else {
     sessionStorage.setItem("access-token", token);
   }

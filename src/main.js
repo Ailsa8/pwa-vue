@@ -13,6 +13,7 @@ import "@/directive";
 import "@/data";
 import "@/utils/filters";
 import "@/components/index";
+import "@/assets/styles/base.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.Http = Http;

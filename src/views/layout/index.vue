@@ -25,6 +25,8 @@ export default {
   display: flex;
   .content{
     flex: 1;
+    height: calc(100vh - 34px);
+    overflow: auto;
   }
 }
 </style>

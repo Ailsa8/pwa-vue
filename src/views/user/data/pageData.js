@@ -40,7 +40,7 @@ const tableJson = {
   }
 };
 const dialogJson = {
-  title: "新增", // dialog标题
-  visible: false // 显示隐藏
+  title: "新增",
+  visible: false
 };
 export { searchJson, tableJson, dialogJson };

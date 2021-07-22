@@ -11,8 +11,7 @@
       stripe
       :row-class-name="tableRowClassName"
       @row-click="handleClickCurrentRow"
-      @selection-change="handleSelectionChange"
-      @select-all="handleSelectAll">
+      @selection-change="handleSelectionChange">
       <el-table-column v-if="tableJson.selectTypeColumns" type="selection" width="55"></el-table-column>
       <el-table-column v-if="tableJson.indexTypeColumns" type="index" label="序号" width="50"></el-table-column>
       <el-table-column
@@ -77,14 +76,20 @@ export default {
       query: {
         pageSize: 10,
         pageNumber: 1
-      }
+      },
+      checkedRows: []
     };
   },
   inject: ["handleQuery", "handleUpdata"],
   methods: {
-    handleClickCurrentRow() {},
-    handleSelectionChange() {},
-    handleSelectAll() {},
+    // 单行点击
+    handleClickCurrentRow(row) {
+      this.$emit("handleClickCurrentRow", row);
+    },
+    // 多选
+    handleSelectionChange(rows) {
+      this.checkedRows = [...rows];
+    },
     // 表格颜色样式
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {

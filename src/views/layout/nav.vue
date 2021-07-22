@@ -1,6 +1,5 @@
 <template>
   <div id="nav">
-    <h5>自定义颜色</h5>
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
@@ -43,6 +42,9 @@ export default {
 <style lang="less" scoped>
 #nav{
   width: 200px;
+  height: 100vh;
+  background-color: #545c64;
+  overflow: hidden;
   a {
     color: inherit;
     text-decoration: none;

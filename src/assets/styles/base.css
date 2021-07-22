@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+/* 滚动条的宽度 */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 10px;
+}
+
+
+/* 滚动条的滑块 */
+
+::-webkit-scrollbar-thumb {
+  background-color: #BFBFBF;
+  border-radius: 5px;
+}
