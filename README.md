@@ -8,3 +8,5 @@ vue-cli4  pwa
 6. 全局异常捕获
 7. 错误日志上传？
 8. Authorization认证
+9. 富文本wangeditor https://www.wangeditor.com/doc/pages/03-%E9%85%8D%E7%BD%AE%E8%8F%9C%E5%8D%95/01-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95.html
+10. 借用canvas画虚化图

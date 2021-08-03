@@ -48,6 +48,15 @@ const OneNav = [
       title: "用户管理",
       icon: "el-icon-menu"
     }
+  },
+  {
+    path: "",
+    name: "other",
+    component: null,
+    meta: {
+      title: "其他功能",
+      icon: "el-icon-menu"
+    }
   }
 ];
 export { allRouter, OneNav };
