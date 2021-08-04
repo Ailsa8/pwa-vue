@@ -17,7 +17,7 @@ export default {
   name: "Directie",
   data() {
     return {
-      options: this.$allData.common.loginOption,
+      options: this.$DATA.common.loginOption,
       value: "",
       time: 120
     };

@@ -7,4 +7,5 @@ files.keys().forEach(key => {
     allApi[name] = files(key).default;
   }
 });
+Vue.prototype.$HTTP = allApi;
 export default allApi;

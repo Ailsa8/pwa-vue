@@ -52,14 +52,15 @@ export default {
       setUserName: "USERNAME"
     }),
     async login() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(async(valid) => {
         if (valid) {
-          this.Http.post("login.login", this.loginData).then(data => {
+          const [, data] = await this.to(this.$HTTP.post.login(this.loginData));
+          if (data) {
             setlocation(data.token);
             setlocation(this.loginData.name, "userName");
             this.setUserName(this.loginData.name);
             this.$router.push("/home");
-          });
+          }
         } else {
           return false;
         }

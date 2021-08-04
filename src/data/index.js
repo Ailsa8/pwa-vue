@@ -7,4 +7,4 @@ files.keys().forEach(key => {
     allData[name] = files(key).default;
   }
 });
-Vue.prototype.$allData = allData;
+Vue.prototype.$DATA = allData;

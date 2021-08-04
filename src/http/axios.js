@@ -71,27 +71,15 @@ function logOut(des) {
   clearInfro();
   router.push("/login");
 }
-
-// 获取url
-const getUrl = function(data) {
-  let title = ""; let subtitle = "";
-  if (data) {
-    title = data.substring(0, data.indexOf("."));
-    subtitle = data.substring(data.indexOf(".") + 1, data.length);
-  }
-  console.log("allApi,", allApi);
-  return allApi[title][subtitle];
-};
-
 class Axios {
   constructor() {
     console.log("2333");
   }
   post(url, params = {}, headers) {
-    return axios.post(getUrl(url), params, { headers });
+    return axios.post(url, params, { headers });
   }
   get(url, params = {}, headers) {
-    return axios.get(getUrl(url), { params, headers });
+    return axios.get(url, { params, headers });
   }
 }
 const Http = new Axios();

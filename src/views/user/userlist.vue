@@ -3,7 +3,7 @@
     <el-button @click="getChecked">获取选择项</el-button>
     <table-page ref="userList" :search-json="searchJson" :table-json="tableJson" :dialog-json="dialogJson" @handleClickCurrentRow="handleClickCurrentRow">
       <template #gender="{row}">
-        {{ $allData.common.gender[row.gender] }}
+        {{ $DATA.common.gender[row.gender] }}
       </template>
       <template #active="{row}">
         <el-button type="text" size="small" @click="handleUpdata('open', row)">编辑</el-button>
@@ -20,7 +20,7 @@
           <el-form-item label="性别：">
             <el-radio-group v-model="form.gender">
               <el-radio
-                v-for="(value,key) in $allData.common.gender"
+                v-for="(value,key) in $DATA.common.gender"
                 :key="key"
                 :label="key">{{ value }}</el-radio>
             </el-radio-group>
@@ -88,19 +88,20 @@ export default {
     };
   },
   methods: {
-    handleQuery(params) {
+    async handleQuery(params) {
       Object.assign(this.searchParams, params);
       Object.keys(this.searchParams).forEach(key => {
         if (!this.searchParams[key]) {
           delete this.searchParams[key];
         }
       });
-      this.Http.post("user.userList", this.searchParams).then(data => {
+      const [, data] = await this.to(this.$HTTP.post.userList(this.searchParams));
+      if (data) {
         this.$set(this.tableJson, "tableData", [...data.data]);
         this.tableJson.total = data.count;
-      });
+      }
     },
-    handleUpdata(type, data = undefined) {
+    async handleUpdata(type, data = undefined) {
       if (type === "open") {
         this.form = { ...data };
         if (data) {
@@ -112,21 +113,23 @@ export default {
         this.dialogJson.visible = true;
         return;
       }
-      this.Http.post("user.userAdd", this.form).then(data => {
+      const [, result] = await this.to(this.$HTTP.post.userAdd(this.form));
+      if (result) {
         this.dialogJson.visible = false;
         const params = {
           pageNumber: 1
         };
         this.handleQuery(params);
-      });
+      }
     },
-    handleDelete(id) {
-      this.Http.get("user.userRemove", { id }).then(data => {
+    async handleDelete(id) {
+      const [, data] = await this.to(this.$HTTP.get.userRemove({ id }));
+      if (data) {
         const params = {
           pageNumber: 1
         };
         this.handleQuery(params);
-      });
+      }
     },
     handleClickCurrentRow(data) {
       console.log(data);
