@@ -7,7 +7,8 @@ const searchJson = {
   }],
   searchInfro: {
     defultData: {},
-    addShow: true
+    addShow: true,
+    resetShow: true
   }
 };
 const tableJson = {

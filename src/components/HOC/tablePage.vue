@@ -8,8 +8,11 @@
       v-if="tableJson.show && tableJson.total > 0"
       v-loading="tableJson.tableLoading"
       :data="tableJson.tableData"
-      stripe
+      :height="tableJson.tableHeight"
+      border
       :row-class-name="tableRowClassName"
+      :cell-class-name="tableCellStyle"
+      @cell-click="cellclick"
       @row-click="handleClickCurrentRow"
       @selection-change="handleSelectionChange">
       <el-table-column v-if="tableJson.selectTypeColumns" type="selection" width="55"></el-table-column>
@@ -30,7 +33,8 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      v-if="tableJson.total > 0"
+      v-if="tableJson.paginationShow && tableJson.total > 0"
+      style="text-align:right"
       layout="total, sizes, prev, pager, next, jumper"
       :total="tableJson.total"
       :page-sizes="[10, 20, 30, 40]"
@@ -39,7 +43,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange">
     </el-pagination>
-    <empty-status v-else :empty-data="tableJson.emptyData"></empty-status>
+    <empty-status v-if="tableJson.total <= 0" :empty-data="tableJson.emptyData"></empty-status>
     <el-dialog :title="dialogJson.title" :visible.sync="dialogJson.visible">
       <slot name="dialogEdit"></slot>
       <div slot="footer" class="dialog-footer">
@@ -77,11 +81,31 @@ export default {
         pageSize: 10,
         pageNumber: 1
       },
-      checkedRows: []
+      checkedRows: [],
+      row: "",
+      column: ""
     };
   },
   inject: ["handleQuery", "handleUpdata"],
   methods: {
+    // 单无格点击
+    cellclick(row, column, cell, event) {
+      const nobg = [...this.tableJson.nobg];
+      if (nobg.includes(column.property)) {
+        return;
+      }
+      this.row = row;
+      this.column = column;
+      this.$emit("cellclick", row);
+    },
+    // 单无格点击后的样式
+    tableCellStyle(row, rowIndex, column) {
+      if (this.row.id === row.row.id && this.column === row.column) {
+        return "activeCell";
+      } else {
+        return "";
+      }
+    },
     // 单行点击
     handleClickCurrentRow(row) {
       this.$emit("handleClickCurrentRow", row);

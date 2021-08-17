@@ -14,3 +14,9 @@
   background-color: #BFBFBF;
   border-radius: 5px;
 }
+
+/* 活动单元格颜色 */
+
+.activeCell{
+  background-color: #d6f1fd;
+}

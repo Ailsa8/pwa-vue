@@ -16,6 +16,7 @@ const tableJson = {
   total: 1, // 必须 表格总数据条数
   tableLoading: false, // 必须 表格loading
   tableData: [{}], // 必须 表格list数据
+  nobg: [], // 哪些字段不需要给活动背景及方法,数组内为columns的prop
   columns: [{
     label: "名称", // 必须
     prop: "user_name", // 条件必须

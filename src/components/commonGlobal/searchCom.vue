@@ -10,11 +10,9 @@
           @handleQuery="handleQuery">
         </component>
       </el-col>
-    </el-row>
-    <el-row type="flex" justify="end">
       <el-col :span="6" class="query-btn-group">
         <el-button type="primary" @click="handleQuery(searchParams)">查询</el-button>
-        <el-button @click="handleReset">重置</el-button>
+        <el-button v-if="searchInfro.resetShow" @click="handleReset">重置</el-button>
         <el-button v-if="searchInfro.addShow" type="primary" @click="handleUpdata('open')">新增</el-button>
       </el-col>
     </el-row>
@@ -42,7 +40,7 @@ export default {
   data() {
     return {
       EditBox,
-      searchParams: { ...this.defultData }
+      searchParams: { ...this.searchInfro.defultData }
     };
   },
   inject: ["handleQuery", "handleUpdata"],

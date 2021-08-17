@@ -6,4 +6,12 @@ export default [{
     title: "canvas",
     activeMenu: "/other"
   }
+}, {
+  path: "/compartion",
+  name: "Compartion",
+  component: () => import("@/views/other/compartion.vue"),
+  meta: {
+    title: "compartion",
+    activeMenu: "/other"
+  }
 }];
