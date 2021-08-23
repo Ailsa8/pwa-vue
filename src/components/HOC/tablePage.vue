@@ -11,7 +11,8 @@
       :height="tableJson.tableHeight"
       border
       :row-class-name="tableRowClassName"
-      :cell-class-name="tableCellStyle"
+      :cell-class-name="tableCellStyleName"
+      :cell-style="tableCellStyle"
       @cell-click="cellclick"
       @row-click="handleClickCurrentRow"
       @selection-change="handleSelectionChange">
@@ -96,15 +97,24 @@ export default {
       }
       this.row = row;
       this.column = column;
-      this.$emit("cellclick", row);
+      this.$emit("cellclick", row, column);
     },
     // 单无格点击后的样式
-    tableCellStyle(row, rowIndex, column) {
-      if (this.row.id === row.row.id && this.column === row.column) {
+    tableCellStyleName(row, rowIndex, column) {
+      const flag = this.tableJson.rowFlag || "id";
+      if (this.row[flag] === row.row[flag] && this.column === row.column) {
         return "activeCell";
       } else {
         return "";
       }
+    },
+    // 单元格样式
+    tableCellStyle(row, rowIndex, column) {
+      const nobg = this.tableJson?.nobg || [];
+      if (nobg.includes(row.column.property)) {
+        return "";
+      }
+      return "cursor: pointer;";
     },
     // 单行点击
     handleClickCurrentRow(row) {

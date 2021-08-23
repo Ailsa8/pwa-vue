@@ -1,40 +1,43 @@
 <template>
   <div id="nav">
     <el-menu
-      default-active="2"
+      :default-active="activeIndex"
       class="el-menu-vertical-demo"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      @open="handleOpen"
-      @close="handleClose">
-      <el-submenu v-for="(item, index) in OneNav" :key="index" :index="'oneLevel' + index">
-        <template slot="title">
-          <i :class="item.meta.icon"></i>
-          <span>{{ item.meta.title }}</span>
-        </template>
-        <el-menu-item v-for="(subItem, subIndex) in allRouter[item.name]" :key="subIndex" :index="'twoLevel' + subIndex">
-          <router-link :to="subItem.path">{{ subItem.meta.title }}</router-link>
+      @select="handleSelect">
+      <div v-for="(item, index) in OneNav" :key="index" :index="'oneLevel' + index">
+        <el-submenu v-if="allRouter[item.name] && allRouter[item.name].length>0" :index="item.name">
+          <template slot="title">{{ item.meta.title }}</template>
+          <el-menu-item v-for="(subItem, subIndex) in allRouter[item.name]" :key="subIndex" :index="'twoLevel' + subItem.path">
+            <router-link :to="subItem.path">{{ subItem.meta.title }}</router-link>
+          </el-menu-item>
+        </el-submenu>
+        <el-menu-item v-else :index="item.name">
+          <router-link :to="item.path">{{ item.meta.title }}</router-link>
         </el-menu-item>
-      </el-submenu>
+      </div>
     </el-menu>
   </div>
 </template>
 <script>
+import { setlocation, getlocation } from "@/utils/storage.js";
 import { OneNav, allRouter } from "@/router/index";
 export default {
   data() {
     return {
       OneNav,
-      allRouter
+      allRouter,
+      activeIndex: ""
     };
   },
+  mounted() {
+    this.activeIndex = getlocation("activeIndex");
+  },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelect(key, keyPath) {
+      setlocation(key, "activeIndex");
     }
   }
 };
@@ -51,6 +54,13 @@ export default {
     width: 100%;
     height: 100%;
     display: block;
+  }
+  .oneleveLink{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: aqua;
   }
 }
 </style>

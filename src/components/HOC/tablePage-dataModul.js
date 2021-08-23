@@ -17,6 +17,7 @@ const tableJson = {
   tableLoading: false, // 必须 表格loading
   tableData: [{}], // 必须 表格list数据
   nobg: [], // 哪些字段不需要给活动背景及方法,数组内为columns的prop
+  rowFlag: "", // 每条数据的唯一标识， 默认为id
   columns: [{
     label: "名称", // 必须
     prop: "user_name", // 条件必须

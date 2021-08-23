@@ -3,7 +3,7 @@
     <el-select
       ref="fieldSelect"
       :value="value"
-      clearable
+      :clearable="!fieldData.noclearable"
       :placeholder="'请选择' + fieldData.label"
       :multiple="fieldData.multiple ? fieldData.multiple : false"
       v-on="$listeners"

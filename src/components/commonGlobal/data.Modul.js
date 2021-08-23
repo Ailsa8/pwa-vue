@@ -7,6 +7,7 @@ export const searchComData = [ // 必填
     label: "查询", // 搜索框默认显示文字
     compName: "HomeSearch", // 组件名称，也可为注入的自定义组件
     options: "", // 下拉列表
+    noclearable: true, // 不需要清空
     elrow: 18 // 占位-栅格
   }
 ];
@@ -16,7 +17,8 @@ export const searchInfro = { // 必填，搜索框其他信息
       type: "0",
       time: new Date()
     }
-  }
+  },
+  loading: false // 查询按钮的loading效果
 };
 /**
  * dataColor
